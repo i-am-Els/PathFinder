@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="cellCollection" style="width: 40%; height: 100%;">
+        <ui:Label name="cellCollectionHeader" text="Cells" style="width: 100%; height: 5%;" />
+        <ui:ListView name="cellListView" style="width: 100%; height: 95%;" />
+    </ui:VisualElement>
+</ui:UXML>
