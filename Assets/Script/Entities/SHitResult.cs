@@ -1,11 +1,11 @@
-using Script.Entities.Bases;
+using Script.Artifacts;
 
 namespace Script.Entities
 {
-    public struct SHitResult
-    {
-        public CellBase Cell;
-        public MobileAgent Agent;
-        public bool Hit;
-    }
+    // public struct SHitResult
+    // {
+    //     public Cell Cell;
+    //     public MobileAgent Agent;
+    //     public bool Hit;
+    // }
 }

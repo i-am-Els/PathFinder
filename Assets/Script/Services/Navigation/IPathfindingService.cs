@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using Script.Entities;
-using Script.Entities.Bases;
+using Script.Artifacts;
 
 namespace Script.Services.Navigation
 {
@@ -11,8 +10,8 @@ namespace Script.Services.Navigation
         /// </summary>
         /// <param name="start">CellItem that depicts the starting point of a Mobile Agent in the Grid</param>
         /// <param name="destination">CellItem that depicts the destination cell of a Mobile Agent on the Grid</param>
-        public void FindPath(CellBase start, CellBase destination);
+        public void FindPath(Cell start, Cell destination);
         
-        public List<CellBase> Path { get; set; }
+        public List<Cell> Path { get; set; }
     }
 }

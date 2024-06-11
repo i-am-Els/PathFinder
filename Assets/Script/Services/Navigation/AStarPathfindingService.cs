@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Script.Entities.Bases;
+using Script.Artifacts;
 using Script.Enums;
 using UnityEngine;
 
@@ -9,17 +9,17 @@ namespace Script.Services.Navigation
 {
     public class AStarPathfindingService : IPathfindingService
     {
-        public List<CellBase> Path { get; set; } = new();
+        public List<Cell> Path { get; set; } = new();
 
-        public void FindPath(CellBase start, CellBase destination)
+        public void FindPath(Cell start, Cell destination)
         {
-            List<CellBase> openList = new() { start };
-            List<CellBase> closedList = new();
+            List<Cell> openList = new() { start };
+            List<Cell> closedList = new();
             
             InitCosts();
 
             start.GCost = 0;
-            start.HCost = GetManhattanHeuristic(start.GetVector(), destination.GetVector());
+            start.HCost = GetManhattanHeuristic(start.GetPosition(), destination.GetPosition());
             
             while (openList.Count > 0)
             {
@@ -33,7 +33,7 @@ namespace Script.Services.Navigation
                 var neighbours = GetNeighbours(current);
                 foreach (var n in neighbours)
                 {
-                    var someGCost = current.GCost + GetEuclideanDistance(current.GetVector(), n.GetVector());
+                    var someGCost = current.GCost + GetEuclideanDistance(current.GetPosition(), n.GetPosition());
                     if(someGCost < n.GCost)
                     {
                         n.GCost = someGCost;
@@ -44,7 +44,7 @@ namespace Script.Services.Navigation
                 }
             }
             
-            Path = new List<CellBase>();
+            Path = new List<Cell>();
             return;
             
             void InitCosts()
@@ -53,15 +53,15 @@ namespace Script.Services.Navigation
                 {
                     var activeCell = cell;
                     if (activeCell == null) continue;
-                    activeCell.HCost = GetManhattanHeuristic(cell.GetVector(), destination.GetVector());
+                    activeCell.HCost = GetManhattanHeuristic(cell.GetPosition(), destination.GetPosition());
                     activeCell.GCost = int.MaxValue;
                     activeCell.parent = null;
                 }
             }
             
-            List<CellBase> GetNeighbours(CellBase current)
+            List<Cell> GetNeighbours(Cell current)
             {
-                List<CellBase> neighbours = new();
+                List<Cell> neighbours = new();
                 var grid = GameSession.GetGrid();
                 if (grid == null) return neighbours;
                 
@@ -90,9 +90,9 @@ namespace Script.Services.Navigation
         }
 
 
-        private static List<CellBase> GetPath(CellBase destination)
+        private static List<Cell> GetPath(Cell destination)
         {
-            List<CellBase> path = new() { destination };
+            List<Cell> path = new() { destination };
             var current = destination;
             while (current.parent != null)
             {
@@ -104,7 +104,7 @@ namespace Script.Services.Navigation
             return path;
         }
 
-        private static CellBase GetCellWithLowestFScore(List<CellBase> openList)
+        private static Cell GetCellWithLowestFScore(List<Cell> openList)
         {
             return openList.OrderBy(cell => cell.GetFCost()).First();
         }

@@ -1,15 +1,15 @@
 using System.Collections.Generic;
-using Script.Entities.Bases;
+using Script.Artifacts;
 
 namespace Script.Services.Navigation
 {
     public class DijkstraPathfindingService : IPathfindingService
     {
-        public void FindPath(CellBase start, CellBase destination)
+        public void FindPath(Cell start, Cell destination)
         {
             
         }
 
-        public List<CellBase> Path { get; set; }
+        public List<Cell> Path { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Script.Artifacts;
 using Script.Components;
 using Script.Entities;
-using Script.Entities.Bases;
 using Script.Enums;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +16,7 @@ namespace Script
         private static GameSession _instance;
         
         public GameObject grid;
-        private static GridBase _gridBase;
+        private static GridBase _grid;
         private static EActionType _actionType;
         private static bool _gameIsPaused = true;
 
@@ -27,11 +27,11 @@ namespace Script
         public static Action GlobalResetSimulationTrigger;
         public static Action PlaySimulationTrigger;
         public static Action PauseSimulationTrigger;
-        public static Action<CellBase> CellChangedTrigger;
+        public static Action<Cell> CellChangedTrigger;
         
         private void Start()
         {
-            _gridBase = grid.GetComponent<GridBase>();
+            _grid = grid.GetComponent<GridBase>();
             _userInterface = GetComponent<UserInterface>();
             _instance = this;
             
@@ -54,7 +54,7 @@ namespace Script
         
         public static GridBase GetGrid()
         {
-            return _gridBase;
+            return _grid;
         }
         
         private static void SetActionMode(int option)
@@ -106,8 +106,13 @@ namespace Script
         public bool CanOperateAtCellVectorPosition(Vector2Int cellPosition)
         {
             return mobileAgents.Select(agent => agent.GetComponent<MobileAgent>())
-                .All(agentComponent => agentComponent.GetStartingPoint().GetVector() != cellPosition 
-                                       && agentComponent.GetDestination().GetVector() != cellPosition);
+                .All(agentComponent => agentComponent.GetStartingPoint().GetPosition() != cellPosition 
+                                       && agentComponent.GetDestination().GetPosition() != cellPosition);
+        }
+        public static void NotifyCellTypeChanged(Cell cell)
+        {
+            CellChangedTrigger.Invoke(cell);
+            // Can push too a wait stack instead for workers to prevent blocking
         }
     }
 }

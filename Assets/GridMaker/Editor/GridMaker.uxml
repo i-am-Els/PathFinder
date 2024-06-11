@@ -1,16 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:VisualElement name="mainLayoutContainer" style="width: 100%; height: 100%; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
         <ui:VisualElement name="titleHeader" style="flex-direction: row; justify-content: flex-start; flex-wrap: wrap; width: 100%; background-color: rgb(34, 32, 32); height: auto;">
-            <ui:TextField picking-mode="Ignore" label="Currently Editing" value="Grid_001" text="Grid_001" name="gridTitle" style="width: 100%; -unity-font-style: bold-and-italic;" />
+            <ui:TextField picking-mode="Ignore" label="Currently Editing" value="Grid_001" text="Grid_001" name="gridTitle" readonly="true" style="width: 100%; -unity-font-style: bold-and-italic;" />
         </ui:VisualElement>
         <ui:Box name="gridSection" style="width: 100%; height: 38%; flex-direction: row;">
             <ui:VisualElement name="gridDetails" style="width: 58%; height: 100%; background-color: rgb(53, 53, 53); border-left-color: rgb(28, 115, 91); border-right-color: rgb(28, 115, 91); border-top-color: rgb(28, 115, 91); border-bottom-color: rgb(28, 115, 91); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 7px; align-items: center; justify-content: flex-start;">
                 <ui:Label text="Grid Settings" display-tooltip-when-elided="true" name="gridLabel" style="width: 100%; height: 10%; -unity-font-style: bold; background-color: rgb(28, 115, 91); border-top-left-radius: 7px; -unity-text-align: middle-left;" />
-                <uie:ObjectField label="Base Prefab" name="basePrefabField" allow-scene-objects="false" type="UnityEngine.GameObject, UnityEngine.CoreModule" style="width: 90%; height: auto; justify-content: center; flex-wrap: wrap;" />
                 <ui:SliderInt picking-mode="Ignore" label="Row" value="42" high-value="100" name="rowSlider" show-input-field="true" low-value="1" style="width: 90%; height: 20%; justify-content: center; flex-basis: auto; flex-wrap: wrap; flex-direction: row; flex-shrink: initial; flex-grow: initial; align-items: stretch;" />
                 <ui:SliderInt picking-mode="Ignore" label="Column" value="1" high-value="100" name="colSlider" show-input-field="true" low-value="1" style="width: 90%; height: 20%; justify-content: center; flex-basis: auto; flex-wrap: wrap; flex-direction: row; flex-shrink: initial; flex-grow: initial;" />
+                <uie:ObjectField label="Base Prefab" name="basePrefabField" allow-scene-objects="false" type="UnityEngine.GameObject, UnityEngine.CoreModule" tooltip="This is a base prefab to be used for generating grids, it doesn&apos;t update for generated grids, only used for a fresh start" style="width: 90%; height: 10%; justify-content: flex-start; flex-wrap: wrap; align-items: center;" />
                 <ui:VisualElement name="buttonActionPanels" style="width: 90%; height: 30%; margin-top: 0; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center;">
-                    <ui:Button text="Save Grid" display-tooltip-when-elided="true" name="createButton" tooltip="Save current grid to Collections" />
+                    <ui:Button text="New Grid" display-tooltip-when-elided="true" name="createButton" tooltip="New Grid" />
+                    <ui:Button text="Save Grid" display-tooltip-when-elided="true" name="saveButton" tooltip="Save current grid to Collections. You cannot inspect grid data if you dont do this." />
                     <ui:Button text="Delete Current Grid" display-tooltip-when-elided="true" name="deleteButton" tooltip="Deletes in-memory grid or clears data for unsaved grid." style="background-color: rgb(183, 3, 3); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
                 </ui:VisualElement>
             </ui:VisualElement>
@@ -24,7 +25,7 @@
         <ui:Box name="cellSection" style="width: 100%; height: 60%; flex-direction: row;">
             <ui:VisualElement name="cellCollection" style="width: 40%; height: 100%; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 7px; border-left-color: rgb(147, 35, 106); border-right-color: rgb(147, 35, 106); border-top-color: rgb(147, 35, 106); border-bottom-color: rgb(147, 35, 106);">
                 <ui:Label name="cellCollectionHeader" text=" All Grid Cells" style="width: 100%; height: 5%; -unity-font-style: italic; background-color: rgb(147, 35, 106); border-top-left-radius: 7px; -unity-text-align: middle-center; white-space: normal;" />
-                <ui:ListView name="cellListView" style="width: 100%; height: 95%; background-color: rgb(53, 53, 53); border-bottom-left-radius: 7px;" />
+                <ui:ListView name="cellListView" header-title="Cell Collections" show-foldout-header="false" show-border="false" style="width: 100%; height: 95%; background-color: rgb(53, 53, 53); border-bottom-left-radius: 7px;" />
             </ui:VisualElement>
             <ui:VisualElement name="spacer" style="width: 2%; height: 100%; background-color: rgb(46, 46, 46);" />
             <ui:VisualElement name="cellDetailsGroup" style="width: 60%; height: 100%; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-right-radius: 7px; border-left-color: rgb(28, 115, 91); border-right-color: rgb(28, 115, 91); border-top-color: rgb(28, 115, 91); border-bottom-color: rgb(28, 115, 91);">
@@ -38,7 +39,9 @@
                     <uie:ObjectField label="Base Prefab" name="cellPrefabField" allow-scene-objects="false" type="UnityEngine.GameObject, UnityEngine.CoreModule" style="width: 90%; height: 10%; justify-content: flex-start; flex-wrap: wrap; align-items: center;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="spacer" style="width: 100%; height: 3%; background-color: rgb(46, 46, 46);" />
-                <ui:VisualElement name="prefabGrid" style="width: 100%; height: 47%; background-color: rgb(58, 70, 65); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 7px; border-bottom-left-radius: 0;" />
+                <ui:VisualElement name="prefabGrid" style="width: 100%; height: 47%; background-color: rgb(58, 70, 65); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 7px; border-bottom-left-radius: 0; flex-direction: column; flex-wrap: wrap;">
+                    <ui:ScrollView name="scrollViewGrid" horizontal-scroller-visibility="Hidden" style="width: 100%; height: 100%; flex-direction: row; flex-wrap: wrap;" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:Box>
     </ui:VisualElement>

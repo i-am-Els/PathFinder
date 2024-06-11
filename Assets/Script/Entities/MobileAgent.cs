@@ -1,20 +1,21 @@
+using Script.Artifacts;
 using Script.Components;
-using Script.Entities.Bases;
 using Script.Enums;
 using Script.Services.Navigation;
+using Script.Services.Selection;
 using UnityEngine;
 
 namespace Script.Entities
 {
-    public class MobileAgent : MonoBehaviour, IEntity
+    public class MobileAgent : SelectableEntity
     {
         private Navigation _navigation;
-        [SerializeField] private CellBase start;
-        [SerializeField] private CellBase destination;
+        [SerializeField] private Cell start;
+        [SerializeField] private Cell destination;
 
-        public int Row { get; set; }
-        public int Col { get; set; }
-        public bool IsSelected { get; set; }
+        // public int Row { get; set; }
+        // public int Col { get; set; }
+        // public bool IsActivated { get; set; }
         
         private void OnEnable()
         {
@@ -47,7 +48,7 @@ namespace Script.Entities
             _navigation.SetNavigation(start, destination);
             if (_navigation.GetPath().Count > 0)
             {
-                _navigation.VisualizePath();
+                // _navigation.VisualizePath();
             }else print("No Path Found");
         }
         
@@ -56,16 +57,27 @@ namespace Script.Entities
             
         }
 
-        private void CellChanged(CellBase activeCell)
+        private void CellChanged(Cell activeCell)
         {
             if (!_navigation.GetPath().Contains(activeCell) || activeCell.GetCellType() != ECellType.Pathway) return;
             _navigation.ResetPath();
             _navigation.SetNavigation(start, destination);
         }
 
-        public CellBase GetStartingPoint() =>  start;
+        public Cell GetStartingPoint() =>  start;
 
-        public CellBase GetDestination() => destination;
-        public Vector2Int GetVector() => new Vector2Int(Row, Col);
+        public Cell GetDestination() => destination;
+        
+        // public Vector2Int GetPosition() => new Vector2Int(Row, Col);
+        
+        public override void Select()
+        {
+            // throw new System.NotImplementedException("Getting to this in a moment");
+        }
+
+        public override void Deselect()
+        {
+            // throw new System.NotImplementedException("Getting to this in a moment");
+        }
     }
 }
