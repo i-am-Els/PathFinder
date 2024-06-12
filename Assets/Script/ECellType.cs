@@ -1,4 +1,4 @@
-namespace Script.Enums
+namespace Script
 {
     public enum ECellType
     {

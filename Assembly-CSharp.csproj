@@ -41,34 +41,31 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Script\Entities\SelectableEntity.cs" />
-    <Compile Include="Assets\Script\Services\Navigation\AStarPathfindingService.cs" />
+    <Compile Include="Assets\Script\Pathfinding\AStarPathfindingService.cs" />
     <Compile Include="Assets\Script\GameSession.cs" />
-    <Compile Include="Assets\Script\Enums\ESettingsEnum.cs" />
+    <Compile Include="Assets\Script\ESettingsEnum.cs" />
     <Compile Include="Assets\Input\ClickActions.cs" />
     <Compile Include="Assets\Script\InputManager.cs" />
-    <Compile Include="Assets\Script\Services\InGameError\Error.cs" />
-    <Compile Include="Assets\Script\Enums\ECellType.cs" />
+    <Compile Include="Assets\Script\InGameError\Error.cs" />
+    <Compile Include="Assets\Script\ECellType.cs" />
     <Compile Include="Assets\Script\Artifacts\GridBase.cs" />
-    <Compile Include="Assets\Script\Entities\SHitResult.cs" />
     <Compile Include="Assets\Script\CameraFit.cs" />
-    <Compile Include="Assets\Script\Services\Selection\ISelectable.cs" />
+    <Compile Include="Assets\Script\Selection\ISelectable.cs" />
     <Compile Include="Assets\Script\Entities\Entity.cs" />
     <Compile Include="Assets\Script\Components\UserInterface.cs" />
-    <Compile Include="Assets\Script\Artifacts\Cell.cs" />
+    <Compile Include="Assets\Script\Entities\Cell.cs" />
     <Compile Include="Assets\Script\Entities\PickUpBase.cs" />
     <Compile Include="Assets\Script\Components\Navigation.cs" />
-    <Compile Include="Assets\Script\Enums\EActionType.cs" />
-    <Compile Include="Assets\Script\Services\Navigation\IPathfindingService.cs" />
+    <Compile Include="Assets\Script\EActionType.cs" />
+    <Compile Include="Assets\Script\Pathfinding\IPathfindingService.cs" />
     <Compile Include="Assets\Script\Entities\VisualCell.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
+    <Compile Include="Assets\Script\Entities\SelectableEntity.cs" />
     <Compile Include="Assets\Script\Entities\MobileAgent.cs" />
-    <Compile Include="Assets\Script\Services\Navigation\DijkstraPathfindingService.cs" />
+    <Compile Include="Assets\Script\Pathfinding\DijkstraPathfindingService.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Script\Services\Selection\SelectionService.cs" />
-    <Compile Include="Assets\Script\Services\Undo\Action.cs" />
-    <Compile Include="Assets\Script\ScriptableObjects\CellProfile\ObstacleCell.cs" />
-    <Compile Include="Assets\Script\SnapTool.cs" />
+    <Compile Include="Assets\Script\Selection\SelectionService.cs" />
+    <Compile Include="Assets\Script\Undo\Action.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

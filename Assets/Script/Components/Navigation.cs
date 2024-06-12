@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Script.Artifacts;
-using Script.Services.Navigation;
+using Script.Entities;
+using Script.Pathfinding;
+using Script.Selection;
 using UnityEngine;
 
 namespace Script.Components
@@ -24,14 +26,17 @@ namespace Script.Components
             _pathfindingService.FindPath(start, destination);
         }
         
-        // public void VisualizePath()
-        // {
-        //     // Update function to play move animation and check for obstacle set as it goes; 
-        //     foreach (var path in from path in _pathfindingService.Path let v = path.GetPosition() where GameSession.GetInstance().CanOperateAtCellVectorPosition(v) select path)
-        //     {
-        //         path.SetCellColorProperty(Color.yellow);
-        //     }
-        // }
+        public void VisualizePath(Cell start, Cell dest)
+        {
+            SelectionService.SetEntitySelectionProperty(Color.white, start);
+            // Update function to play move animation and check for obstacle set as it goes; 
+            foreach (var path in _pathfindingService.Path)
+            { 
+                if (!GameSession.GetInstance().CanOperateAtCellVectorPosition(path.GetPosition())) continue;
+                SelectionService.SetEntitySelectionProperty(Color.yellow, path);
+            }
+            SelectionService.SetEntitySelectionProperty(Color.blue, dest);
+        }
 
         public List<Cell> GetPath() => _pathfindingService.Path;
         

@@ -1,4 +1,4 @@
-namespace Script.Services.InGameError
+namespace Script.InGameError
 {
     public record Error{
         public string Name { get; set; }

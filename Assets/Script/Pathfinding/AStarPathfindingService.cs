@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Script.Artifacts;
-using Script.Enums;
+using Script.Entities;
 using UnityEngine;
 
-namespace Script.Services.Navigation
+namespace Script.Pathfinding
 {
     public class AStarPathfindingService : IPathfindingService
     {
@@ -25,7 +24,11 @@ namespace Script.Services.Navigation
             {
                 var current = GetCellWithLowestFScore(openList);
                 
-                if (current == destination) Path = GetPath(destination);
+                if (current == destination)
+                {
+                    Path = GetPath(destination);
+                    return;
+                }
                 
                 openList.Remove(current);
                 closedList.Add(current);
@@ -49,12 +52,13 @@ namespace Script.Services.Navigation
             
             void InitCosts()
             {
-                foreach (var cell in GameSession.GetGrid().GetCellItems())
+                var grid = GameSession.GetGrid();
+                foreach (var cell in grid.GetCellItems())
                 {
                     var activeCell = cell;
                     if (activeCell == null) continue;
                     activeCell.HCost = GetManhattanHeuristic(cell.GetPosition(), destination.GetPosition());
-                    activeCell.GCost = int.MaxValue;
+                    activeCell.GCost = grid.widthInCellUnits * grid.heightInCellUnits * 10;
                     activeCell.parent = null;
                 }
             }
@@ -101,6 +105,7 @@ namespace Script.Services.Navigation
             }
         
             path.Reverse();
+            path.RemoveAt(0);
             return path;
         }
 

@@ -1,23 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
-using Script.Artifacts;
 using Script.Entities;
-using Script.Enums;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Script.Services.Selection
+namespace Script.Selection
 {
     public class SelectionService
     {
         public static List<SelectableEntity> SelectedEntities;
         
-        private readonly Camera _mainCamera;
+        private Camera _mainCamera;
 
         public SelectionService()
         {
-            _mainCamera = Camera.main;
             SelectedEntities = new List<SelectableEntity>();
+        }
+
+        public void SetCamera(Camera camera)
+        {
+            _mainCamera = camera;
         }
 
         public static void SetEntitySelectionProperty(Color color, SelectableEntity entity)

@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using Script.Entities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Script.Artifacts
 {
     [ExecuteAlways]
     public class GridBase : MonoBehaviour
     {
-        [SerializeField] private List<Cell> _cells = new();
+        [SerializeField] private List<Cell> cells = new();
         
         // private List<Vector2Int> _obstaclesPositions;
 
@@ -16,15 +18,19 @@ namespace Script.Artifacts
         [HideInInspector] 
         public int heightInCellUnits;
 
-        public static Action<string> GridDeletedAction;
+        // public static Action<string> GridDeletedAction;
         
-        public static int Counter { get; private set; }
-        
+        // public static int Counter { get; private set; }
+
         public GridBase()
         {
-            Counter++;
+            // Counter++;
         }
         
+        /// <summary>
+        /// Instantiates a grid's cell GameObjects and retrieves their Cell components into the _cells list. Returns void
+        /// </summary>
+        /// <param name="baseCellPrefab">The base GameObject to instantiate the cells with</param>
         public void GenerateGridCells(GameObject baseCellPrefab)
         {
             Debug.Log($"Cell instantiated: {widthInCellUnits}, {heightInCellUnits}");
@@ -42,16 +48,17 @@ namespace Script.Artifacts
                 var cellItem = temp != null ? temp : cell.AddComponent<Cell>();
                 cellItem.InitCellWithData( Mathf.FloorToInt(i % (float)widthInCellUnits), Mathf.FloorToInt(i / (float)(widthInCellUnits)));
                 cell.name = $"Cell({cellItem.Row}, {cellItem.Col})";
-                _cells.Add(cellItem); 
+                cells.Add(cellItem); 
                 cell.transform.SetParent(transform);
+                cellItem.SilentlySetCellType(ECellType.Pathway);
             }
         }
         
-        public List<Cell> GetCellItems() => _cells;
+        public List<Cell> GetCellItems() => cells;
 
-        private void OnDestroy()
-        {
-            GridDeletedAction.Invoke(name);
-        }
+        // private void OnDestroy()
+        // {
+        //     GridDeletedAction.Invoke(name);
+        // }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Script.Artifacts;
 using Script.Entities;
-using Script.Enums;
+using Script.Selection;
 using Script.Services.Selection;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,13 +16,19 @@ namespace Script
         private SelectionService _selectionService;
         
         // private bool _overUI;
+        private InputManager()
+        {
+        }
+
+        public void SetSelectionService(SelectionService selectionService)
+        {
+            _selectionService = selectionService;
+        }
 
         private void OnEnable()
         {
             _clickAction = new ClickActions();
             _clickAction.Enable();
-            _selectionService = new SelectionService();
-            // SelectionService.SelectedEntities = new List<ISelectable>();
         }
         
         private void Start()

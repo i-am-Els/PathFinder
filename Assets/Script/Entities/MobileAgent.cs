@@ -1,8 +1,5 @@
-using Script.Artifacts;
 using Script.Components;
-using Script.Enums;
-using Script.Services.Navigation;
-using Script.Services.Selection;
+using Script.Pathfinding;
 using UnityEngine;
 
 namespace Script.Entities
@@ -12,10 +9,6 @@ namespace Script.Entities
         private Navigation _navigation;
         [SerializeField] private Cell start;
         [SerializeField] private Cell destination;
-
-        // public int Row { get; set; }
-        // public int Col { get; set; }
-        // public bool IsActivated { get; set; }
         
         private void OnEnable()
         {
@@ -23,6 +16,7 @@ namespace Script.Entities
             GameSession.PlaySimulationTrigger += PlaySim;
             GameSession.PauseSimulationTrigger += PauseSim;
             GameSession.CellChangedTrigger += CellChanged;
+            GameSession.GridCreated += InitializeEnvironmentData;
         }
 
         private void OnDisable()
@@ -31,13 +25,22 @@ namespace Script.Entities
             GameSession.PlaySimulationTrigger -= PlaySim;
             GameSession.PauseSimulationTrigger -= PauseSim;
             GameSession.CellChangedTrigger -= CellChanged;
+            GameSession.GridCreated -= InitializeEnvironmentData;
         }
 
         private void Start()
         {
             _navigation = new Navigation(new AStarPathfindingService());
         }
-        
+
+        private void InitializeEnvironmentData()
+        {
+            var cellArray = GameSession.GetGrid().GetCellItems();
+            start = cellArray[Random.Range(0, cellArray.Count)];
+            while((destination = cellArray[Random.Range(0, cellArray.Count)]) == start) {}
+            print($"start: {start.GetPosition()}, destination: {destination.GetPosition()}");
+        }
+
         private void ResetSim()
         {
             _navigation.SetService(new AStarPathfindingService());
@@ -48,7 +51,7 @@ namespace Script.Entities
             _navigation.SetNavigation(start, destination);
             if (_navigation.GetPath().Count > 0)
             {
-                // _navigation.VisualizePath();
+                _navigation.VisualizePath(start, destination);
             }else print("No Path Found");
         }
         
@@ -64,7 +67,7 @@ namespace Script.Entities
             _navigation.SetNavigation(start, destination);
         }
 
-        public Cell GetStartingPoint() =>  start;
+        public Cell GetStartingPoint() => start;
 
         public Cell GetDestination() => destination;
         

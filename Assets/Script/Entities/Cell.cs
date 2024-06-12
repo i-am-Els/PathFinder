@@ -1,10 +1,8 @@
 using System;
-using Script.Entities;
-using Script.Enums;
-using Script.Services.Selection;
+using Script.Artifacts;
 using UnityEngine;
 
-namespace Script.Artifacts
+namespace Script.Entities
 {
     [RequireComponent(typeof(MeshRenderer))]
     public class Cell : SelectableEntity
@@ -63,12 +61,17 @@ namespace Script.Artifacts
             GameSession.NotifyCellTypeChanged(this);
 #endif
         }
-        
-        private void OnDestroy()
+
+        public void SilentlySetCellType(ECellType value)
         {
-            transform.parent.gameObject.GetComponent<GridBase>()?.GetCellItems().Remove(this);
-            CellDeletedAction.Invoke(Row, Col, gameObject.transform.parent.name);
+            _cellType = value;
         }
+
+        // private void OnDestroy()
+        // {
+        //     transform.parent.gameObject.GetComponent<GridBase>()?.GetCellItems().Remove(this);
+        //     CellDeletedAction.Invoke(Row, Col, gameObject.transform.parent.name);
+        // }
 
         public override void Select()
         {

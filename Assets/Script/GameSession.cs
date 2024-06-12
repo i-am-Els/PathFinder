@@ -4,7 +4,6 @@ using System.Linq;
 using Script.Artifacts;
 using Script.Components;
 using Script.Entities;
-using Script.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,16 +27,23 @@ namespace Script
         public static Action PlaySimulationTrigger;
         public static Action PauseSimulationTrigger;
         public static Action<Cell> CellChangedTrigger;
+        public static Action GridCreated;
         
         private void Start()
         {
-            _grid = grid.GetComponent<GridBase>();
+            grid = new GameObject("Grid");
+            _grid = grid.AddComponent<GridBase>();
             _userInterface = GetComponent<UserInterface>();
             _instance = this;
             
             _userInterface.PlayAndPauseSimTrigger += PlayAndPauseSimulation;
             _userInterface.ResetSimTrigger += ResetSimulation;
             _userInterface.SetActionModeTrigger += SetActionMode;
+            
+            _grid.widthInCellUnits = 7;
+            _grid.heightInCellUnits = 5;
+            _grid.GenerateGridCells(GameObject.CreatePrimitive(PrimitiveType.Cube));
+            GridCreated.Invoke();
         }
         
         private void OnDisable()
@@ -106,8 +112,8 @@ namespace Script
         public bool CanOperateAtCellVectorPosition(Vector2Int cellPosition)
         {
             return mobileAgents.Select(agent => agent.GetComponent<MobileAgent>())
-                .All(agentComponent => agentComponent.GetStartingPoint().GetPosition() != cellPosition 
-                                       && agentComponent.GetDestination().GetPosition() != cellPosition);
+                .All(agentComponent => ((agentComponent.GetStartingPoint().GetPosition() != cellPosition) 
+                                       && (agentComponent.GetDestination().GetPosition() != cellPosition)));
         }
         public static void NotifyCellTypeChanged(Cell cell)
         {

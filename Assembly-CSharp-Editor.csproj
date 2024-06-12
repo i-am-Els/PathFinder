@@ -47,6 +47,7 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
     <Compile Include="Assets\GridMaker\Editor\Services\IO\GridData.cs" />
     <Compile Include="Assets\GridMaker\Editor\Services\IO\FileInteractionService.cs" />
+    <Compile Include="Assets\Editor\SnapTool.cs" />
     <None Include="Assets\GridMaker\Editor\GridMaker.uxml" />
     <None Include="Assets\GridMaker\Editor\GridMaker.uss" />
     <Reference Include="UnityEngine">

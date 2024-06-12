@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Script.Artifacts;
+using Script.Entities;
 
-namespace Script.Services.Navigation
+namespace Script.Pathfinding
 {
     public class DijkstraPathfindingService : IPathfindingService
     {

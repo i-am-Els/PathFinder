@@ -1,3 +1,4 @@
+using Script.Selection;
 using UnityEngine;
 
 namespace Script
@@ -8,9 +9,12 @@ namespace Script
     {
 
         private static GameManager _gameManager;
+        private readonly SelectionService _selectionService = new();
 
         private void Start()
         {
+            GetComponent<InputManager>().SetSelectionService(_selectionService);
+            _selectionService.SetCamera(Camera.main);
             _gameManager = this;
             
         }
